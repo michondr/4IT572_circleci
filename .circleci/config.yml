@@ -39,7 +39,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "cc:ca:5b:72:76:54:b9:e0:47:17:76:d9:01:45:0e:92"
-      - run: echo $SSH_PRIVATE_KEY | sed 's/<CRLF>/\n/g' > devops-final-hw.pem
+      - run: echo $SSH_PRIVATE_KEY | sed 's/|/\n/g' > devops-final-hw.pem
       - run: chmod 400 devops-final-hw.pem
       - ansible-playbook/playbook:
           playbook: ./ansible/ec2_deploy.yml

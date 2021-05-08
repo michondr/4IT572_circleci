@@ -45,32 +45,45 @@
     ansible_ssh_private_key_file: /home/circleci/project/devops-final-hw.pem
 
   tasks:
+    - name: add docker repo
+      shell:
+        - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        - echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      become: yes
+
+    - name: Update apt-get repo and cache
+      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
     - name: install docker
       apt:
         name:
-          - runc
-          - containerd
-          - docker.io
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
         state: present
         update_cache: yes
-      become: yes
+
     - service:
         name: docker
         state: started
         enabled: yes
       become: yes
+
     - name: get project files from git
       git:
         repo: 'https://github.com/michondr/4IT572_circleci.git'
         dest: ./app
+
     - name: build docker with eshop
       shell: cd app && docker build -t myeshop:latest .
       become: yes
+
     - name: run docker with eshop
       shell: cd app && docker run -p 80:3000 myeshop
       async: 60
       poll: 10
       become: yes
+
     - wait_for:
         port: 80
 

@@ -7,12 +7,12 @@
 
   tasks:
     - name: Identify running instances for termination
-        ec2_instance_info:
-          region: us-east-1
-          aws_access_key: "{{access_key}}"
-          aws_secret_key: "{{secret_key}}"
-          security_token: "{{session_token}}"
-        register: ec2_stat
+      ec2_instance_info:
+        region: us-east-1
+        aws_access_key: "{{access_key}}"
+        aws_secret_key: "{{secret_key}}"
+        security_token: "{{session_token}}"
+      register: ec2_stat
 
     - name: launch instance
       ec2:

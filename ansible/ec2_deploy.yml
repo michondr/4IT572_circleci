@@ -48,6 +48,7 @@
     - name: install docker
       apt:
         name:
+          - runc
           - containerd
           - docker.io
         state: present

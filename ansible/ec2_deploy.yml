@@ -9,9 +9,9 @@
     - name: Identify running instances for termination
       ec2_instance_info:
         region: us-east-1
-        aws_access_key: "{{access_key}}"
-        aws_secret_key: "{{secret_key}}"
-        security_token: "{{session_token}}"
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+        security_token: "{{ lookup('env', 'AWS_SESSION_TOKEN') }}"
       register: ec2_stat
 
     - name: launch instance
@@ -25,9 +25,9 @@
         wait: true
         count: 1
         group: eshop
-        aws_access_key: "{{access_key}}"
-        aws_secret_key: "{{secret_key}}"
-        security_token: "{{session_token}}"
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+        security_token: "{{ lookup('env', 'AWS_SESSION_TOKEN') }}"
       register: ec2
 
     - name: add instance host to group
@@ -82,9 +82,9 @@
       ec2:
         region: us-east-1
         state: absent
-        aws_access_key: "{{access_key}}"
-        aws_secret_key: "{{secret_key}}"
-        security_token: "{{session_token}}"
+        aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+        security_token: "{{ lookup('env', 'AWS_SESSION_TOKEN') }}"
         instance_ids: '{{ item.instance_id }}'
       loop: "{{ ec2_stat.instances }}"
       loop_control:

@@ -82,8 +82,8 @@
 
     - name: run docker with eshop
       shell: cd app && docker run -p 80:3000 myeshop
-      async: 60
-      poll: 10
+      async: 100
+      poll: 0
       become: yes
 
     - wait_for:

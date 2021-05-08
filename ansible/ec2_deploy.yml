@@ -47,7 +47,9 @@
   tasks:
     - name: install docker
       apt:
-        name: docker.io
+        name:
+          - containerd
+          - docker.io
         state: present
         update_cache: yes
       become: yes

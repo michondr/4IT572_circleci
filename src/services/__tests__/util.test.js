@@ -7,7 +7,7 @@ describe('util', () => {
     });
 
     it('should by default return decimal separated by dot', () => {
-      expect(formatPrice(10)).toEqual('10.00');
+      expect(formatPrice(10)).toEqual('100000.00');
     });
   });
 });
